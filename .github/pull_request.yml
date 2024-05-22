@@ -1,0 +1,17 @@
+name: Pull request workflow
+
+on: 
+  pull_requests:
+    branches: [main]
+jobs:
+  test: 
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Test Suite
+        run: npm test
