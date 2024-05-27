@@ -13,12 +13,13 @@ jobs:
       - name: Build
         run: |
           echo "IMAGE_TAG=main-$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_ENV
-          echo "building image ${{ env.IMAGE_TAG}}"
+          echo "building image $IMAGE_TAG"
 
       - name: Push
         run: echo "pushing image ${{ env.IMAGE_TAG}}"
   deploy:
     name: Deploy to Environment
+    environment: qa
     needs: build-and-push
     runs-on: ubuntu-latest
     steps: 
