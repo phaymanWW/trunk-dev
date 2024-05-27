@@ -2,8 +2,6 @@ name: Push To Trunk
 on:
   push:
     branches: [main, feat/*]
-env: 
-  IMAGE_TAG: main-$($GITHUB_SHA | cut -c1-7)
 jobs:
   build-and-push:
     name: Build and Push Image
@@ -17,7 +15,7 @@ jobs:
       - name: Build
         id: build
         run: |
-          IMAGE_TAG=$(echo "${GITHUB_SHA}" | cut -c1-7)
+          IMAGE_TAG=$(echo main-"${GITHUB_SHA}" | cut -c1-7)
           echo "image_tag=$IMAGE_TAG" >> $GITHUB_OUTPUT
           echo "building image $IMAGE_TAG"
       - name: Push
