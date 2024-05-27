@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - name: Deploy
-        run: echo "deploying image main-$GITHUB_SHA 
+        run: echo "deploying image main-$GITHUB_SHA"
   post-deploy-tests:
     name: Post Deploy Tests
     needs: deploy
