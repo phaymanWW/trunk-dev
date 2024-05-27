@@ -12,7 +12,7 @@ jobs:
       
       - name: Build
         run: |
-          "IMAGE_TAG=main-$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_ENV
+          echo "IMAGE_TAG=main-$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_ENV
           echo "building image ${{ env.IMAGE_TAG}}"
 
       - name: Push
