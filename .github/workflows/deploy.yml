@@ -15,7 +15,7 @@ jobs:
       - name: Build
         id: build
         run: |
-          IMAGE_TAG=$(echo main-"${GITHUB_SHA}" | cut -c1-7)
+          echo "IMAGE_TAG=main-$(echo "${GITHUB_SHA}" | cut -c1-7)" >> $GITHUB_ENV
           echo "image_tag=$IMAGE_TAG" >> $GITHUB_OUTPUT
           echo "building image $IMAGE_TAG"
       - name: Push
