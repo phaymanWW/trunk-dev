@@ -3,8 +3,7 @@ on:
   pull_request:
     branches: [main]
 jobs:
-  test: 
-    name: Run Tests
+  Tests: 
     runs-on: ubuntu-latest
     steps: 
       - name: Checkout Repository
