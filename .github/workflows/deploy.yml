@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - name: Deploy
-        run: echo "deploying image ${{ env.IMAGE_TAG }}" to ${{ env.TRIGGER_GROUP }}/${{ env.TRIGGER_PRODUCT}}/${{ env.TRIGGER_ENV }}/${{ env.TIGGER_LOCATION}}"
+        run: echo "deploying image ${{ env.IMAGE_TAG }} to ${{ env.TRIGGER_GROUP }}/${{ env.TRIGGER_PRODUCT}}/${{ env.TRIGGER_ENV }}/${{ env.TIGGER_LOCATION}}"
   create-release-tag: 
     name: Create Relase Tag
     needs: deploy
