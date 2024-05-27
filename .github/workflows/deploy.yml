@@ -15,17 +15,24 @@ jobs:
           IMAGE_TAG=main-$(git rev-parse --short ${{ github.sha }})
           echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
           echo "building image $IMAGE_TAG"
-
+          echo "### Hello world! :rocket:" >> $GITHUB_STEP_SUMMARY
       - name: Push
-        run: echo "pushing image ${{ env.IMAGE_TAG}}"
+        run: |
+          echo "pushing image ${{ env.IMAGE_TAG}}"
+          echo "other syntax $IMAGE_TAG"
+          echo "### Hello world! :rocket:" >> $GITHUB_STEP_SUMMARY
   deploy:
     name: Deploy to Environment
     environment: qa
+    env: 
+      TRIGGER_GROUP= ${{ vars.TRIGGER_GROUP}}
     needs: build-and-push
     runs-on: ubuntu-latest
     steps: 
       - name: Deploy
-        run: echo "deploying image ${{ env.IMAGE_TAG }} to ${{ env.TRIGGER_GROUP }}/${{ env.TRIGGER_PRODUCT}}/${{ env.TRIGGER_ENV }}/${{ env.TIGGER_LOCATION}}"
+        run: | 
+          echo "deploying image ${{ env.IMAGE_TAG }} to ${{ env.TRIGGER_GROUP }}/${{ env.TRIGGER_PRODUCT}}/${{ env.TRIGGER_ENV }}/${{ env.TIGGER_LOCATION}}"
+          echo "other syntax $IMAGE_TAG
   create-release-tag: 
     name: Create Relase Tag
     needs: deploy
