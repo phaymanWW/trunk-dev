@@ -1,7 +1,7 @@
 name: Pull request workflow
 
 on: 
-  pull_requests:
+  pull_request:
     branches: [main]
 jobs:
   test: 
