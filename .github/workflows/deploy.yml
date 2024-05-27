@@ -3,7 +3,7 @@ on:
   push:
     branches: [main, feat/*]
 env: 
-  IMAGE_TAG: main-$(git rev-parse --short ${{ github.sha }})
+  IMAGE_TAG: main-$($GITHUB_SHA | cut -c1-7)
 jobs:
   build-and-push:
     name: Build and Push Image
