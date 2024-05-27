@@ -1,0 +1,33 @@
+name: Push To Trunk
+on:
+  push:
+    branches: [feat/*]
+jobs:
+  build-and-push:
+    name: Build and Push Image
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      
+      - name: Build
+        run: echo "building image main-$GITHUB_SHA"
+
+      - name: Push
+        run: echo "pushing image main-$GITHUB_SHA"
+  deploy:
+    name: Deploy to Environment
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Deploy
+        run: echo "deploying image main-$GITHUB_SHA 
+  post-deploy-tests:
+    name: Post Deploy Tests
+    needs: develop
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check deploy complete
+        run: echo "wait til pods updated with new image"
+      - name: Smoke test env
+        run: echo "here we automate tests that new version up and running"
