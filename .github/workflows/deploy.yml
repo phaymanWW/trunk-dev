@@ -1,7 +1,7 @@
 name: Push To Trunk
 on:
   push:
-    branches: [feat/*]
+    branches: [main, feat/*]
 jobs:
   build-and-push:
     name: Build and Push Image
@@ -12,7 +12,7 @@ jobs:
       
       - name: Build
         run: |
-          echo "IMAGE_TAG=main-$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_ENV
+          "IMAGE_TAG=main-$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_ENV
           echo "building image ${{ env.IMAGE_TAG}}"
 
       - name: Push
@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - name: Tag
-        run: echo "create release tag qa only?"
+        run: echo "create release tag prod only?"
   post-deploy-tests:
     name: Post Deploy Tests
     needs: deploy
