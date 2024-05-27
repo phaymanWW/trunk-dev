@@ -32,7 +32,7 @@ jobs:
       - name: Deploy
         run: | 
           echo "deploying image ${{ env.IMAGE_TAG }} to ${{ env.TRIGGER_GROUP }}/${{ env.TRIGGER_PRODUCT}}/${{ env.TRIGGER_ENV }}/${{ env.TIGGER_LOCATION}}"
-          echo "other syntax $IMAGE_TAG
+          echo "other syntax $IMAGE_TAG"
   create-release-tag: 
     name: Create Relase Tag
     needs: deploy
