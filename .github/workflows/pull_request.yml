@@ -17,3 +17,8 @@ jobs:
 
       - name: Run Test Suite
         run: npm test
+  Other:
+    runs-on: ubuntu-latest
+    steps:
+     - name: Some Parralell thing
+       run: ls
