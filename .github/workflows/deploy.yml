@@ -28,8 +28,8 @@ jobs:
     steps: 
       - name: Deploy
         run: | 
-          echo "deploying image ${{ env.IMAGE_TAG }} to ${{ env.TRIGGER_ID}}"
-          echo "### Deployed ${{ env.IMAGE_TAG}} to ${{ env.TRIGGER_ID }} ${{:rocket:" >> $GITHUB_STEP_SUMMARY
+          echo "deploying image ${{ env.IMAGE_TAG }} to ${{ env.TRIGGER_ID }}"
+          echo "### Deployed ${{ env.IMAGE_TAG }} to ${{ env.TRIGGER_ID }} ${{:rocket:}}" >> $GITHUB_STEP_SUMMARY
   create-release-tag: 
     name: Create Relase Tag
     needs: deploy
