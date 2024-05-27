@@ -11,17 +11,26 @@ jobs:
         uses: actions/checkout@v4
       
       - name: Build
-        run: echo "building image main-$GITHUB_SHA"
+        run: |
+          echo "IMAGE_TAG=main-$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_ENV
+          echo "building image ${{ env.IMAGE_TAG}}"
 
       - name: Push
-        run: echo "pushing image main-$GITHUB_SHA"
+        run: echo "pushing image ${{ env.IMAGE_TAG}}"
   deploy:
     name: Deploy to Environment
     needs: build-and-push
     runs-on: ubuntu-latest
     steps: 
       - name: Deploy
-        run: echo "deploying image main-$GITHUB_SHA"
+        run: echo "deploying image ${{ env.IMAGE_TAG }}" to ${{ env.TRIGGER_GROUP }}/${{ env.TRIGGER_PRODUCT}}/${{ env.TRIGGER_ENV }}/${{ env.TIGGER_LOCATION}}"
+  create-release-tag: 
+    name: Create Relase Tag
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Tag
+        run: echo "create release tag qa only?"
   post-deploy-tests:
     name: Post Deploy Tests
     needs: deploy
