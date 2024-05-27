@@ -2,6 +2,8 @@ name: Push To Trunk
 on:
   push:
     branches: [main, feat/*]
+env: 
+  IMAGE_TAG: main-$(git rev-parse --short ${{ github.sha }})
 jobs:
   build-and-push:
     name: Build and Push Image
@@ -12,27 +14,22 @@ jobs:
       
       - name: Build
         run: |
-          IMAGE_TAG=main-$(git rev-parse --short ${{ github.sha }})
-          echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
-          echo "building image $IMAGE_TAG"
-          echo "### Hello world! :rocket:" >> $GITHUB_STEP_SUMMARY
+          echo "building image ${{ env.IMAGE_TAG}}"
       - name: Push
         run: |
           echo "pushing image ${{ env.IMAGE_TAG}}"
-          echo "other syntax $IMAGE_TAG"
-          echo "### Hello world! :rocket:" >> $GITHUB_STEP_SUMMARY
   deploy:
     name: Deploy to Environment
     environment: qa
     env: 
-      TRIGGER_GROUP: ${{ vars.TRIGGER_GROUP}}
+      TRIGGER_ID: "${{ vars.TRIGGER_GROUP }}/${{ vars.TRIGGER_PRODUCT }}/${{ vars.TRIGGER_ENV }}/${{ vars.TRIGGER_LOCATION }}"
     needs: build-and-push
     runs-on: ubuntu-latest
     steps: 
       - name: Deploy
         run: | 
-          echo "deploying image ${{ env.IMAGE_TAG }} to ${{ env.TRIGGER_GROUP }}/${{ env.TRIGGER_PRODUCT}}/${{ env.TRIGGER_ENV }}/${{ env.TIGGER_LOCATION}}"
-          echo "other syntax $IMAGE_TAG"
+          echo "deploying image ${{ env.IMAGE_TAG }} to ${{ env.TRIGGER_ID}}"
+          echo "### Deployed ${{ env.IMAGE_TAG}} to ${{ env.TRIGGER_ID }} ${{:rocket:" >> $GITHUB_STEP_SUMMARY
   create-release-tag: 
     name: Create Relase Tag
     needs: deploy
