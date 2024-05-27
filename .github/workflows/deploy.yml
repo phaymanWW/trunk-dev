@@ -8,27 +8,31 @@ jobs:
   build-and-push:
     name: Build and Push Image
     runs-on: ubuntu-latest
+    outputs: 
+      image_tag: ${{ steps.build.outputs.image_tag }}
     steps: 
       - name: Checkout Repository
         uses: actions/checkout@v4
       
       - name: Build
         run: |
-          echo "building image ${{ env.IMAGE_TAG}}"
+          echo "IMAGE_TAG=$($GITHUB_SHA | cut -c1-7)"
+          echo "image_tag=$IMAGE_TAG" >> $GITHUB_OUTPUTS
+          echo "building image $IMAGE_TAG"
       - name: Push
         run: |
-          echo "pushing image ${{ env.IMAGE_TAG}}"
+          echo "pushing image $IMAGE_TAG"
   deploy:
     name: Deploy to Environment
+    needs: build-and-push
+    runs-on: ubuntu-latest
     environment: qa
     env: 
       TRIGGER_ID: "${{ vars.TRIGGER_GROUP }}/${{ vars.TRIGGER_PRODUCT }}/${{ vars.TRIGGER_ENV }}/${{ vars.TRIGGER_LOCATION }}"
-    needs: build-and-push
-    runs-on: ubuntu-latest
     steps: 
       - name: Deploy
         run: | 
-          echo "deploying image ${{ env.IMAGE_TAG }} to ${{ env.TRIGGER_ID }}"
+          echo "deploying image ${{ needs.build-and-push.outputs.image_tag }} to ${{ env.TRIGGER_ID }}"
           echo "### Deployed ${{ env.IMAGE_TAG }} to ${{ env.TRIGGER_ID }} :rocket:" >> $GITHUB_STEP_SUMMARY
   create-release-tag: 
     name: Create Relase Tag
