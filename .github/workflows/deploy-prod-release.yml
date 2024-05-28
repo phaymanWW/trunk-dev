@@ -1,7 +1,10 @@
 name: Deploy prod on release 
 on: 
-  release:
-    types: [published]
+  push:
+    branches: [main, feat/*]
+concurrency: 
+  group: production
+  cancel-in-progress: true
 jobs:
   deploy:
     name: Deploy to Environment
