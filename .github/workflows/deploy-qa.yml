@@ -1,7 +1,7 @@
 name: Deploy QA
 on:
   push:
-    branches: [main]
+    branches: [main, feat/*]
 jobs:
   build-and-push:
     name: Build and Push Image
@@ -23,23 +23,12 @@ jobs:
         run: |
           echo "pushing image $IMAGE_TAG"
   deploy:
-    name: Deploy to Environment
+    name: Deploy
     needs: build-and-push
-    runs-on: ubuntu-latest
-    environment: qa
+    uses: ./.github/workflows/deploy.yml
     env: 
-      TRIGGER_ID: "${{ vars.TRIGGER_GROUP }}/${{ vars.TRIGGER_PRODUCT }}/${{ vars.TRIGGER_ENV }}/${{ vars.TRIGGER_LOCATION }}"
-    steps: 
-      - name: Deploy
-        run: | 
-          echo "deploying image ${{ needs.build-and-push.outputs.image_tag }} to ${{ env.TRIGGER_ID }}"
-          echo "### Deployed ${{ needs.build-and-push.outputs.image_tag }} to ${{ env.TRIGGER_ID }} :rocket:" >> $GITHUB_STEP_SUMMARY
-  post-deploy-tests:
-    name: Post Deploy Tests
-    needs: deploy
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check deploy complete
-        run: echo "wait til pods updated with new image"
-      - name: Smoke test env
-        run: echo "here we automate tests that new version up and running"
+      IMAGE_TAG: ${{ needs.build-and-push.outputs.image-tag }} 
+    with: 
+      environment: qa
+      image-tag: $IMAGE_TAG
+

@@ -1,0 +1,31 @@
+name: Deploy
+on:
+  workflow_call:
+    inputs:
+      environment: 
+        required: true
+        type: string
+      image-tag: 
+        required: true
+        type: string
+jobs:
+  deploy:
+    name: Deploy to ${{ inputs.environment }}
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    env: 
+      TRIGGER_ID: "${{ vars.TRIGGER_GROUP }}/${{ vars.TRIGGER_PRODUCT }}/${{ vars.TRIGGER_ENV }}/${{ vars.TRIGGER_LOCATION }}"
+    steps: 
+      - name: Deploy
+        run: | 
+          echo "deploying image ${{ inputs.image-tag }} to ${{ env.TRIGGER_ID }}"
+          echo "### Deployed ${{ inputs.image-tag }} to ${{ env.TRIGGER_ID }} :rocket:" >> $GITHUB_STEP_SUMMARY
+  post-deploy-tests:
+    name: Post Deploy Tests
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check deploy complete
+        run: echo "wait til pods updated with new image"
+      - name: Smoke test env
+        run: echo "here we automate tests that new version up and running"
