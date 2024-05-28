@@ -15,8 +15,10 @@ jobs:
     steps: 
       - name: Deploy
         run: | 
-          echo "deploying image ${{ needs.build-and-push.outputs.image_tag }} to ${{ env.TRIGGER_ID }}"
-          echo "### Deployed ${{ needs.build-and-push.outputs.image_tag }} to ${{ env.TRIGGER_ID }} :rocket:" >> $GITHUB_STEP_SUMMARY
+          IMAGE_TAG=main-$(echo "${GITHUB_SHA}" | cut -c1-7)
+          echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
+          echo "deploying image $IMAGE_TAG to ${{ env.TRIGGER_ID }}"
+          echo "### Deployed $IMAGE_TAG to ${{ env.TRIGGER_ID }} :rocket:" >> $GITHUB_STEP_SUMMARY
   create-release-tag: 
     name: Create Release Tag
     needs: deploy
