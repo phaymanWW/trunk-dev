@@ -26,7 +26,9 @@ jobs:
     name: Deploy
     needs: build-and-push
     uses: ./.github/workflows/deploy.yml
+    env: 
+      IMAGE_TAG=${{ needs.build-and-push.outputs.image-tag }} 
     with: 
       environment: qa
-      image-tag: ${{ needs.build-and-push.outputs.image-tag }} 
+      image-tag: $IMAGE_TAG
 
