@@ -47,4 +47,4 @@ jobs:
     name: Prepare Prod Release
     needs: post-deploy-tests
     runs-on: ubuntu-latest
-    uses: ./github/workflows/deploy-prod.yml
+    uses: ./.github/workflows/deploy-prod.yml
