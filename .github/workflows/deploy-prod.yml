@@ -1,7 +1,8 @@
 name: Deploy production 
 on: 
   workflow_dispatch:
-    branches: [main]
+    branches: [main, feat/*]
+concurrency: production
 jobs:
   deploy:
     name: Deploy to Environment
