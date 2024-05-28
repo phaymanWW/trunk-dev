@@ -2,7 +2,9 @@ name: Deploy production
 on: 
   push:
     branches: [main, feat/*]
-# concurrency: production
+concurrency: 
+  group: production
+  cancel-in-progress: true
 jobs:
   deploy:
     name: Deploy to Environment
