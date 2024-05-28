@@ -14,6 +14,7 @@ jobs:
     steps: 
       - name: Deploy
         run: | 
+          echo ${GITHUB_SHA}
           echo "deploying image ${{ needs.build-and-push.outputs.image_tag }} to ${{ env.TRIGGER_ID }}"
           echo "### Deployed ${{ needs.build-and-push.outputs.image_tag }} to ${{ env.TRIGGER_ID }} :rocket:" >> $GITHUB_STEP_SUMMARY
   create-release-tag: 
@@ -22,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - name: Tag
-        run: echo "create release tag prod only?"
+        run: echo "create release tag prod only ${GITHUB_SHA}?"
   post-deploy-tests:
     name: Post Deploy Tests
     needs: deploy
@@ -31,4 +32,4 @@ jobs:
       - name: Check deploy complete
         run: echo "wait til pods updated with new image"
       - name: Smoke test env
-        run: echo "here we automate tests that new version up and running"
+        run: echo "here we automate tests that new version up and running${GITHUB_SHA}"
