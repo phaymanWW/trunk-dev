@@ -1,7 +1,7 @@
-name: Deploy production 
+name: Deploy prod on review 
 on: 
   push:
-    branches: [main, feat/*]
+    branches: [main]
 concurrency: 
   group: production
   cancel-in-progress: true
