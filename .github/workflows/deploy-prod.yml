@@ -1,7 +1,6 @@
-name: Deploy prod on review 
+name: Deploy Prod
 on: 
-  push:
-    branches: [main]
+  workflow_call:
 concurrency: 
   group: production
   cancel-in-progress: true

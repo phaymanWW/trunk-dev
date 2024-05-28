@@ -43,3 +43,8 @@ jobs:
         run: echo "wait til pods updated with new image"
       - name: Smoke test env
         run: echo "here we automate tests that new version up and running"
+  prepare-prod-release: 
+    name: Prepare Prod Release
+    needs: post-deploy-tests
+    runs-on: ubuntu-latest
+    uses: ./github/workflows/deploy-prod.yml
