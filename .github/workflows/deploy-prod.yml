@@ -1,9 +1,9 @@
 name: Deploy Prod
 on: 
   workflow_call:
-# concurrency: 
-#   group: production
-#   cancel-in-progress: true
+concurrency: 
+  group: production
+  cancel-in-progress: true
 jobs:
   deploy:
     name: Deploy to Environment
