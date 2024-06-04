@@ -1,7 +1,7 @@
 name: Deploy QA
 on:
   push:
-    branches: [main]
+    branches: [main, matrix-test]
 jobs:
   build-and-push:
     name: Build and Push Image
@@ -29,6 +29,13 @@ jobs:
     environment: qa
     env: 
       TRIGGER_ID: "${{ vars.TRIGGER_GROUP }}/${{ vars.TRIGGER_PRODUCT }}/${{ vars.TRIGGER_ENV }}/${{ vars.TRIGGER_LOCATION }}"
+    strategy:
+      matrix:
+        include:
+          - app: winenonprod/wine/qa
+            payload: deployments/qa/wine.json
+          - app: winenonprod/wine-internal/qa
+            payload: deployments/qa/wine-internal.json
     steps: 
       - name: Deploy
         run: | 
