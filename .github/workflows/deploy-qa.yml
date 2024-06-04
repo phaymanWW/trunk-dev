@@ -26,7 +26,6 @@ jobs:
     name: Deploy to Environment
     needs: build-and-push
     runs-on: ubuntu-latest
-    environment: qa
     env: 
       TRIGGER_ID: "${{ vars.TRIGGER_GROUP }}/${{ vars.TRIGGER_PRODUCT }}/${{ vars.TRIGGER_ENV }}/${{ vars.TRIGGER_LOCATION }}"
     strategy:
@@ -44,6 +43,7 @@ jobs:
   post-deploy-tests:
     name: Post Deploy Tests
     needs: deploy
+    environment: qa
     runs-on: ubuntu-latest
     steps:
       - name: Check deploy complete
