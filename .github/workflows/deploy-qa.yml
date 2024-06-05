@@ -52,3 +52,4 @@ jobs:
     name: Prepare Prod Release
     needs: post-deploy-tests
     uses: ./.github/workflows/deploy-prod.yml
+    secrets: inherit
