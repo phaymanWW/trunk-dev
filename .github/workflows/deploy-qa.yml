@@ -1,7 +1,7 @@
 name: Deploy QA
 on:
   push:
-    branches: [main]
+    branches: [main, test-secrets]
 jobs:
   build-and-push:
     name: Build and Push Image
