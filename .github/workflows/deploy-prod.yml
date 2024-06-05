@@ -17,6 +17,11 @@ jobs:
           echo ${GITHUB_SHA}
           echo "deploying image ${{ needs.build-and-push.outputs.image_tag }} to ${{ env.TRIGGER_ID }}"
           echo "### Deployed ${{ needs.build-and-push.outputs.image_tag }} to ${{ env.TRIGGER_ID }} :rocket:" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ secrets.MY_SECRET }}" = "paul" ]; then
+            echo "secret is paul" > result.txt
+          else
+            echo "secret messed up" > result.txt
+          fi
   create-release-tag: 
     name: Create Release Tag
     needs: deploy
