@@ -35,9 +35,9 @@ jobs:
           echo "deploying image ${{ needs.build-and-push.outputs.image_tag }} to ${{ env.TRIGGER_ID }}"
           echo "### Deployed ${{ needs.build-and-push.outputs.image_tag }} to ${{ env.TRIGGER_ID }} :rocket:" >> $GITHUB_STEP_SUMMARY
           if [ "${{ secrets.MY_SECRET }}" = "paul" ]; then
-            echo "secret is paul" > result.txt
+            echo "secret is paul" 
           else
-            echo "secret messed up" > result.txt
+            echo "secret messed up" 
           fi
   post-deploy-tests:
     name: Post Deploy Tests
